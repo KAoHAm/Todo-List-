@@ -1,0 +1,34 @@
+
+
+body{
+    font-size: 14px;
+	font-color: red;
+    background-color: lightgrey;
+    background-image: url("https://images.pexels.com/photos/583848/pexels-photo-583848.jpeg?auto=compress&cs=tinysrgb&h=350");
+    background-repeat: no-repeat ;
+    background-position: center ;
+    background-size: cover ;
+    height: 400px;
+    width: 100%;
+    margin: 100px auto;
+
+}
+
+div{
+     ;
+}
+.list{
+    align-content: center;
+    border-radius: 5px;
+    background-color: green ;
+}
+
+.list-group {
+
+    padding-left: 25px;
+    /* border-left: 1px solid red; */
+    color: red;
+}
+
+
+

@@ -1,0 +1,52 @@
+{
+  "name": "webpack-4-quickstart",
+  "version": "1.0.0",
+  "description": "> Webpack 4 tutorial: All You Need to Know, from 0 Conf to Production Mode",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valentinogagliardi/webpack-4-quickstart.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/valentinogagliardi/webpack-4-quickstart/issues"
+  },
+  "homepage": "https://github.com/valentinogagliardi/webpack-4-quickstart#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.0.7",
+    "mini-css-extract-plugin": "^0.2.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "uuid": "^3.3.2",
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "brfs": "^2.0.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.3.14",
+    "multer": "^1.4.1",
+    "npm-check": "^5.9.0",
+    "react-form-validator-core": "^0.5.0"
+  }
+}
