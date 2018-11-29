@@ -10,7 +10,7 @@ function getDateTime(unixTime) {
     let day = (d.getDate().toString().length == 1) ? ('0' + d.getDate()) : d.getDate();
     let mount=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Oug", "Sep", "Oct", "Nov", "Dec" ];
     let mi = d.getMonth()
-    let time = h + ':' + m +" "+day+" "+ mount[mi];
+    let time = h + ':' + m +":"+s+" "+day+" "+ mount[mi];
     return time;
 }
 

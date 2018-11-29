@@ -51,7 +51,7 @@ class ConnectedForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const _id = uuidv1();
-        this.state._id =id
+        this.state._id =_id
         this.state.deadLine = addTime(this.state.deadLine)
         this.props.addToDo(this.state);
         this.setState({title: "", deadLine: "30"});
@@ -85,14 +85,14 @@ class ConnectedForm extends Component {
                     <TextValidator
                         step="0.01"
                         name="time"
-                        type = "text"
+                        type = "number"
                         className = "form-control"
                         id = "deadLine"
                         value = {deadLine}
                         onChange = {this.handleChangeDeadLine}
                         autoComplete="off"
-                        validators={['required', 'isFloat', "isPositive"]}
-                        errorMessages={['this field is required', 'Time is not valid', "Time MUST be positive"]}
+                        validators={['required', 'isFloat']}
+                        errorMessages={['this field is required', 'Time is not valid']}
                     />
                 </tr>
                 </tbody >

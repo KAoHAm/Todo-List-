@@ -8,9 +8,9 @@ body{
     background-repeat: no-repeat ;
     background-position: center ;
     background-size: cover ;
-    height: 400px;
+    height: flex;
     width: 100%;
-    margin: 100px auto;
+    margin: 200px auto;
 
 }
 
@@ -28,6 +28,21 @@ div{
     padding-left: 25px;
     /* border-left: 1px solid red; */
     color: red;
+}
+
+#page-numbers {
+    list-style: none;
+    display: flex;
+
+}
+
+#page-numbers > li {
+    margin-right: 0.3em;
+    color: blue;
+    user-select: none;
+    cursor: pointer;
+    border: 1px solid blue;
+    border-radius: 6px;
 }
 
 
