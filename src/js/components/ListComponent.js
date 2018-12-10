@@ -16,7 +16,8 @@ class ProductList extends Component {
        this.props.loadingToDo()
     }
     render(){
-
+console.log("propl",this.props)
+console.log("statel",this.state)
         return(
             <div >
                 <ul className="list-group list-group-flush"  onLoad={this.handleSubmit}>

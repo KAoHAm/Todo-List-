@@ -33,7 +33,7 @@ div{
 #page-numbers {
     list-style: none;
     display: flex;
-
+    align: center
 }
 
 #page-numbers > li {
@@ -43,7 +43,10 @@ div{
     cursor: pointer;
     border: 1px solid blue;
     border-radius: 6px;
+    align-content: center
 }
-
+.pagin{
+    child-align: center
+}
 
 

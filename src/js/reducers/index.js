@@ -3,21 +3,26 @@ import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo} from "../constants/actio
 import {loadToDo} from "../actions";
 
 
-const url = "http://localhost:8081/";
+const url = "http://localhost:8081/todo";
 const fetchTodo = (dispatch) => {
-    fetch(url)
-        .then(response => response.json())
-        .then(todos => {
-            dispatch(loadToDo(todos))
-
-        })
+   fetch(url)
+       .then(res=>res.json())
+       .then(el=> {
+           fetch(el.links.first)
+                   .then(response => response.json())
+                   .then(todos => {
+                       todos.data.map(el => {
+                            console.log("el",el.attributes)
+                           dispatch(loadToDo(el.attributes))
+                       })
+                   })
+       })
 }
 const TimeOut=(t)=>{
-    t.map(el=>{
-        if(el.deadLine<=Number(new Date)){
-            el.title= el.title.concat(" Not Done!!!");
-            //console.log("el",typeof el.title)
-        }
+      t.map(el=>{
+        if (el.deadLine <= Number(new Date)) {
+            el.title = el.title.concat(" Not Done!!!");
+            }
     })
 }
 const deletetodo=(todo)=>{
@@ -44,6 +49,7 @@ const postTodo=(todo)=>{
 const initialState = {
     todos: [],
 }
+
 const rootReducer = (state = initialState, {type, payload}) => {
 
     switch (type) {
@@ -52,7 +58,6 @@ const rootReducer = (state = initialState, {type, payload}) => {
             return {todos: [...state.todos, payload.todo]};
         }
         case LOADING_ToDo: {
-
             fetchTodo(payload.dispatch)
             return state
         }
@@ -62,7 +67,6 @@ const rootReducer = (state = initialState, {type, payload}) => {
             return {todos: [...state.todos, ...payload.todos]};
         }
         case DELETE_ToDo: {
-
             deletetodo(payload)
             return {todos: [...state.todos.filter(todo => todo._id !== payload._id)]}
         }

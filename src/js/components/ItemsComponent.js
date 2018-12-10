@@ -47,6 +47,7 @@ class ConnectedItem extends Component {
     }
 
     render() {
+
         let state=this.state
         let prop=this.props;
         state.todos=prop.todos
@@ -100,7 +101,7 @@ class ConnectedItem extends Component {
             }
 
         return (
-            <div>
+            <div className="pagin">
               {renderTodos1}
                 <div id="page-numbers">
                     {prevPage}
