@@ -6,7 +6,7 @@ import  ItemsTodoComponent from "./ItemsTodoComponent"
 const idv = uuidv1();
 
 const mapStateToProps = state => {
-    return {todos: state.todos, count: state.count};
+    return {todos: state.todos};
 };
 
 const mapDispatchToProps = dispatch => {
@@ -24,7 +24,7 @@ class ConnectedItem extends Component {
         this.state = {
             currentPage: 1,
             todosPerPage: 6,
-          //  count: Number
+            count: Number
         };
         this.handleClick = this.handleClick.bind(this);
         this.goPrevPage = this.goPrevPage.bind(this);
@@ -47,8 +47,6 @@ class ConnectedItem extends Component {
     }
 
     render() {
-       console.log(this.props)
-       // console.log(this.state)
         let state=this.state
         let prop=this.props;
         state.todos=prop.todos
@@ -64,7 +62,7 @@ class ConnectedItem extends Component {
         });
         // Logic for displaying page numbers
         const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(this.props.count / todosPerPage); i++) {
+        for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
             pageNumbers.push(i);
         }
 
@@ -102,13 +100,15 @@ class ConnectedItem extends Component {
             }
 
         return (
-            <div className="pagin">
+            <div>
+                                            //adding pagination whith numbers and buttons "nest" and "prev"
               {renderTodos1}
                 <div id="page-numbers">
                     {prevPage}
             <ul className="pagination pagination-md" id="page-numbers">
                 {renderPageNumbers}
             </ul>
+                                            
                     {nextpage}
                 </div>
             </div>
@@ -119,4 +119,3 @@ class ConnectedItem extends Component {
 
 const Item = connect(mapStateToProps, mapDispatchToProps)(ConnectedItem);
 export default Item
-

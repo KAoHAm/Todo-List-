@@ -1,6 +1,5 @@
 import React, { Component} from 'react'
 
-
 function getDateTime(unixTime) {
     let d = new Date(unixTime);
     let h = (d.getHours().toString().length == 1) ? ('0' + d.getHours()) : d.getHours();
@@ -33,7 +32,5 @@ const ItemsTodoComponent = props => {
             </table>
         </div>
     )}
-
-
 
 export default ItemsTodoComponent;
