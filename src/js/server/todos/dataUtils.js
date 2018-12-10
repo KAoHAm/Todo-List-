@@ -22,7 +22,11 @@ exports.setUpConnection=()=> {
 exports.GetTodo=()=>{
     console.log("Get Todo")
 
-    return Todo.find()
+    return  Todo.find();
+}
+
+exports.Count=(i)=>{
+    return  i=Todo.countDocuments()
 }
 
 exports.PostTodo=(data)=> {

@@ -4,21 +4,20 @@ import {loadToDo} from "../actions";
 
 
 const url = "http://localhost:8081/todo";
-const fetchTodo = (dispatch) => {
-   fetch(url)
+let page=0
+
+const fetchTodo = (dispatch, count) => {
+   fetch(url+"?page[offset]="+page)
        .then(res=>res.json())
        .then(el=> {
-           fetch(el.links.first)
-                   .then(response => response.json())
-                   .then(todos => {
-                       todos.data.map(el => {
-                            console.log("el",el.attributes)
-                           dispatch(loadToDo(el.attributes))
-                       })
-                   })
+           el.data.map(el => {
+               dispatch(loadToDo(el.attributes, el.count))
+           })
        })
+
 }
 const TimeOut=(t)=>{
+   // console.log("t",t)
       t.map(el=>{
         if (el.deadLine <= Number(new Date)) {
             el.title = el.title.concat(" Not Done!!!");
@@ -62,9 +61,8 @@ const rootReducer = (state = initialState, {type, payload}) => {
             return state
         }
         case LOAD_ToDo: {
-
             TimeOut(payload.todos)
-            return {todos: [...state.todos, ...payload.todos]};
+            return {todos: [...state.todos, ...payload.todos], count: payload.count};
         }
         case DELETE_ToDo: {
             deletetodo(payload)

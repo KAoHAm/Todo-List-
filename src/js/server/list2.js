@@ -18,8 +18,8 @@ const todosPerPage=6
 const page=0
 
 const url = "http://localhost:8081/todo";
-const resSend=(data={},url)=>{
-    let next
+const resSend=(data={},url, count)=>{
+    let next=0
     let len=Math.ceil(data.length/todosPerPage)
     len>1? next=page+1 : null
       return {
@@ -30,34 +30,46 @@ const resSend=(data={},url)=>{
             last: url+"?page[offset]="+len
         },
         data: [{
+           count: count,
             type: "todos",
             attributes: data,
         }]
     }
 }
 app.get("/todo",(req, res)=>{
+    let pageCount=0
+    console.log(pageCount)
     let  curentPage=req.query.page;
     const todosPerPage=6;
-console.log(curentPage)
-
      if(curentPage!==undefined){
          db.GetTodo().skip(todosPerPage*(curentPage.offset)).limit(todosPerPage)
              .then(data=>{
-                 res.send(resSend(data, url))
+              //   console.log("1",resSend(data, url,count))
+                 db.Count()
+                     .then(count=> {
+                         console.log("asd", count)
+
+
+
+                         res.send(resSend(data, url,count))
+                     })
              })
      }
     else {
          db.GetTodo()
              .then(data => {
+                 console.log("2",resSend(data, url), )
+
                  res.send(resSend(data, url))
              })
      }
+
+
 })
 
 app.post("/todo",(req, res)=>{
     db.PostTodo(req.body)
         .then(data=>{
-            console.log("p", data)
             res.send(data)
         })
 })

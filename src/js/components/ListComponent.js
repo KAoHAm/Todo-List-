@@ -9,15 +9,17 @@ const mapDispatchToProps = dispatch => {
     };
 };
 const mapStateToProps = state => {
+    //console.log(state)
     return {todos: state.todos};
 };
 class ProductList extends Component {
     componentDidMount () {
        this.props.loadingToDo()
+
     }
     render(){
-console.log("propl",this.props)
-console.log("statel",this.state)
+
+        //console.log(this)
         return(
             <div >
                 <ul className="list-group list-group-flush"  onLoad={this.handleSubmit}>

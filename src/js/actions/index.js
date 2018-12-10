@@ -6,11 +6,11 @@ const url = "http://localhost:8081/to-do";
 export const addToDo = (todo) => ({
     type: ADD_ToDo, payload: {todo, deadLine}
 });
-export const loadingToDo = (dispatch) => ({
-    type: LOADING_ToDo, payload: {dispatch}
+export const loadingToDo = (dispatch, count) => ({
+    type: LOADING_ToDo, payload: {dispatch, count}
 });
-export const loadToDo = (todos) => ({
-    type: LOAD_ToDo, payload: {todos}
+export const loadToDo = (todos, count) => ({
+    type: LOAD_ToDo, payload: {todos, count}
 });
 export const deleteToDo = (_id) => ({
     type: DELETE_ToDo, payload: {_id}
