@@ -101,12 +101,14 @@ class ConnectedItem extends Component {
 
         return (
             <div>
+                                            //adding pagination whith numbers and buttons "nest" and "prev"
               {renderTodos1}
                 <div id="page-numbers">
                     {prevPage}
             <ul className="pagination pagination-md" id="page-numbers">
                 {renderPageNumbers}
             </ul>
+                                            
                     {nextpage}
                 </div>
             </div>
@@ -117,7 +119,3 @@ class ConnectedItem extends Component {
 
 const Item = connect(mapStateToProps, mapDispatchToProps)(ConnectedItem);
 export default Item
-
-/*   <ul id="page-numbers">
-                  {renderPageNumbers}
-              </ul>*/
