@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Item from "./ItemsComponent";
 import {addToDo, loadingToDo, deleteToDo} from "../actions";
-
+import Page from "./PaginationComponent"
 const mapDispatchToProps = dispatch => {
     return {
         loadingToDo: () => dispatch(loadingToDo(dispatch))
@@ -10,21 +10,23 @@ const mapDispatchToProps = dispatch => {
 };
 const mapStateToProps = state => {
     //console.log(state)
-    return {todos: state.todos};
+    return {todos: state.todos, count: state.count};
 };
 class ProductList extends Component {
     componentDidMount () {
-       this.props.loadingToDo()
+    //   console.log(this.props,"asd")
 
     }
     render(){
-
-        //console.log(this)
+       let page=Math.ceil(this.props.count/6)
+      //  console.log(this.props)
         return(
             <div >
                 <ul className="list-group list-group-flush"  onLoad={this.handleSubmit}>
                 <Item />
+                    <Page/>
                 </ul>
+
             </div>
         )
     }

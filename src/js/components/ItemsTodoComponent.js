@@ -24,7 +24,8 @@ const ItemsTodoComponent = props => {
                 <tr >
                     <td width="50% ">{props.todo.title}</td>
                     <td width="40% "  >{myTime }</td>
-                    <td>  <button className="btn-success btn-lg"
+                    <td>  <button
+                        className="btn-success btn-lg"
                         onClick={() => props.delete(props.todo._id)} >
                         -
                     </button></td>

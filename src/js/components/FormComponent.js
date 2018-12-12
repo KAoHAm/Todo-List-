@@ -58,6 +58,7 @@ class ConnectedForm extends Component {
     }
 
     render() {
+        console.log(this.props)
         const {title, deadLine} = this.state;
         return (
             <ValidatorForm
@@ -85,14 +86,14 @@ class ConnectedForm extends Component {
                     <TextValidator
                         step="0.01"
                         name="time"
-                        type = "number"
+                        type = "text"
                         className = "form-control"
                         id = "deadLine"
                         value = {deadLine}
                         onChange = {this.handleChangeDeadLine}
                         autoComplete="off"
                         validators={['required', 'isFloat']}
-                        errorMessages={['this field is required', 'Time is not valid']}
+                        errorMessages={['Time is required', 'Time is not valid']}
                     />
                 </tr>
                 </tbody >

@@ -22,7 +22,7 @@ exports.setUpConnection=()=> {
 exports.GetTodo=()=>{
     console.log("Get Todo")
 
-    return  Todo.find();
+    return  Todo.find().sort({"deadLine":-1});
 }
 
 exports.Count=(i)=>{
@@ -44,33 +44,3 @@ exports.DeleteTodo=(data)=> {
 
 }
 
-/*   links: {
-        self: "http://localhost:8081/todos",
-        next: "http://localhost:8081/todos?page[offset]=2",
-        last: "http://localhost:8081/todos?page[offset]=10"
-    },
-    data: [{
-        type: "articles",
-        id: "1",
-        attributes: {
-            title: "JSON:API paints my bikeshed!"
-        },
-        relationships: {},
-        links:{
-            self: "http://localhost:8081/todos/1"
-        },
-    }],
-   included: [{
-        type: "todos",
-        attributes: {
-            title: {type: String},
-            deadLine: {type:Number}
-        },
-        links: {
-            self: "http://localhost:8081/todos/_id"
-        }
-    }],
-
-}, {
-    versionKey: false,
-});*/

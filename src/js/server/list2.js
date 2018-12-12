@@ -26,8 +26,8 @@ const resSend=(data={},url, count)=>{
        links: {
             self: url,
             first: url+"?page[offset]="+page,
-            next: url+"?page[offset]="+next,
-            last: url+"?page[offset]="+len
+            next: url+"?page[offset]="+(page+1),
+            prev: url+"?page[offset]="+(page-1)
         },
         data: [{
            count: count,
@@ -37,29 +37,21 @@ const resSend=(data={},url, count)=>{
     }
 }
 app.get("/todo",(req, res)=>{
-    let pageCount=0
-    console.log(pageCount)
+
     let  curentPage=req.query.page;
     const todosPerPage=6;
      if(curentPage!==undefined){
          db.GetTodo().skip(todosPerPage*(curentPage.offset)).limit(todosPerPage)
              .then(data=>{
-              //   console.log("1",resSend(data, url,count))
                  db.Count()
                      .then(count=> {
-                         console.log("asd", count)
-
-
-
-                         res.send(resSend(data, url,count))
+                         res.send(resSend(data, url, count))
                      })
              })
      }
     else {
          db.GetTodo()
              .then(data => {
-                 console.log("2",resSend(data, url), )
-
                  res.send(resSend(data, url))
              })
      }
