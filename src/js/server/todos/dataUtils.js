@@ -19,7 +19,7 @@ exports.setUpConnection=()=> {
 
 exports.GetTodo=()=>{
     console.log("Get Todo")
-    return  Todo.find().sort({"deadLine":-1});
+    return  Todo.find().sort({"deadLine":1});
 }
 
 exports.Count=(i)=>{
@@ -36,7 +36,7 @@ exports.PostTodo=(data)=> {
 }
 
 exports.DeleteTodo=(data)=> {
-	console.log("deleting", data)
+	console.log("deleting")
 	return  Todo.deleteOne({"_id":data._id})
 
 }

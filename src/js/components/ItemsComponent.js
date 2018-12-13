@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import uuidv1 from "uuid";
 import {DELETE_ToDo} from "../constants/action-types";
-import {deleteToDo} from "../actions";
 import  ItemsTodoComponent from "./ItemsTodoComponent"
 const idv = uuidv1();
 
@@ -31,6 +30,7 @@ class ConnectedItem extends Component {
     render() {
         let prop=this.props.todos
         byTime(this.props.todos)
+
         const    renderTodos = () =>{
             return this.props.todos.map((todo={}, index) =>
                 <ItemsTodoComponent delete={this.props.deleteToDo} key={idv+index} todo={todo} />)

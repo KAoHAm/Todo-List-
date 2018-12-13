@@ -19,7 +19,6 @@ class ProductList extends Component {
     }
     render(){
        let page=Math.ceil(this.props.count/6)
-      //  console.log(this.props)
         return(
             <div >
                 <ul className="list-group list-group-flush"  onLoad={this.handleSubmit}>

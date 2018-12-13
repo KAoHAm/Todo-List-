@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {ADD_ToDo, DELETE_ToDo, LOADING_ToDo, LOADING} from "../constants/action-types";
-import  ItemsTodoComponent from "./ItemsTodoComponent"
-import {loadingToDo, loading} from "../actions";
+import {LOADING_ToDo } from "../constants/action-types";
 
 const mapStateToProps = state => {
 
@@ -77,29 +75,30 @@ class Pagination extends Component {
         });
 
         // Logic for displaying buttonst "first", "Prev", "next" and "last"
-        const firstPage = this.state.currentPage<3  ? null :
-            <li
-                id="page-numbers"
-                className="page-numbers"
-                onClick={this.goFirstPage}
-            >First
-            </li>;
 
-        const prevPage = this.state.currentPage <2  ? null :
+             const firstPage = this.state.currentPage < 3 ? null :
+                 <li
+                     id="page-numbers"
+                     className="page-numbers"
+                     onClick={this.goFirstPage}
+                 >First
+                 </li>;
+
+        const prevPage = this.state.currentPage < 2 ? null :
             <li
                 id="page-numbers"
                 className="page-numbers"
                 onClick={this.goPrevPage}
             >Prev
             </li>;
-        const nextpage = this.state.count===this.state.currentPage ? null :
+        const nextpage = this.state.count <= 1 ? null :
             <li
                 id="page-numbers"
                 className="page-item"
                 onClick={this.goNextPage}
             >Next
             </li>;
-        const lastpage = this.state.count<3 ? null :
+        const lastpage = this.state.count < 3 ? null :
             <li
                 id="page-numbers"
                 className="page-item"

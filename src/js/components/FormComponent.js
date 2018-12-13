@@ -79,7 +79,7 @@ class ConnectedForm extends Component {
                         onChange = {this.handleChangeTitle}
                         autoComplete="off"
                         validators={['required', 'isString']}
-                        errorMessages={['Title is required!!', 'Title is not valid!!']}
+                        errorMessages={['Title is required!', 'Title is not valid!']}
                     />
                     <TextValidator
                         step="0.01"
@@ -91,7 +91,7 @@ class ConnectedForm extends Component {
                         onChange = {this.handleChangeDeadLine}
                         autoComplete="off"
                         validators={['required', 'isFloat']}
-                        errorMessages={['Time is required!!', 'Time is not valid!!']}
+                        errorMessages={['Time is required!', 'Time is not valid!']}
                     />
                 </tr>
                 </tbody >

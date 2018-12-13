@@ -1,12 +1,9 @@
 // src/js/actions/index.js
-import {ADD_ToDo, LOAD_ToDo, LOADING_ToDo, DELETE_ToDo, LOADING} from "../constants/action-types";
+import {ADD_ToDo, LOAD_ToDo, LOADING_ToDo, DELETE_ToDo} from "../constants/action-types";
 
 export const addToDo = (todo) => ({
-    type: ADD_ToDo, payload: {todo, deadLine}
+    type: ADD_ToDo, payload: {todo, deadLine, }
 });
-/*export const loadingToDo = (dispatch, page) => ({
-    type: LOADING_ToDo, payload: {dispatch, page}
-});*/
 export const loadingToDo = (page,dispatch) => ({
     type: LOADING_ToDo, payload: {page, dispatch}
 });

@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 const count = st => {
-    console.log(st)
     return { count: st.count };
 };
 const ConnectedCount = ({ count }) => (

@@ -1,21 +1,9 @@
 // src/js/reducers/index.js
-import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo, LOADING} from "../constants/action-types";
+import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo} from "../constants/action-types";
 import {loadToDo} from "../actions";
 
 const url = "http://localhost:8081/todo";
-/*const fetchTodo1 = (dispatch) => {
-   fetch(url+"?page[offset]="+1)
-       .then(res=>res.json())
-       .then(el=> {
-            let links=el.links
-           el.data.map(el => {
-               dispatch(loadToDo(el.attributes, el.count, links))
-           })
-       })
-
-}*/
 const TimeOut=(t)=>{
-   // console.log("t",t)
       t.map(el=>{
         if (el.deadLine <= Number(new Date)) {
             el.title = el.title.concat(" Not Done!!!");
@@ -44,17 +32,13 @@ const postTodo=(todo)=>{
 
     })
         .then(res=>res.json())
-        .then(todo=>console.log(todo))
 }
 const fetchTodo=( dispatch, page)=>{
     fetch(url+"?page[offset]="+(page))
         .then(res=>res.json())
         .then(el=> {
-            console.log("el",el)
-
             let links=el.links
             el.data.map(el => {
-                console.log("el",el)
                 dispatch(loadToDo(el.attributes, el.count, links, page))
             })
         })
@@ -62,22 +46,14 @@ const fetchTodo=( dispatch, page)=>{
 const initialState = {
     todos: [],
 }
-
-
-
 const rootReducer = (state = initialState, {type, payload}) => {
 
     switch (type) {
         case ADD_ToDo: {
-            console.log("pay",payload)
             postTodo(payload.todo)
-            console.log(state)
             return {todos: [...state.todos, payload.todo]};
         }
-      /*  case LOADING_ToDo: {
-            fetchTodo(payload.dispatch)
-            return state
-        }*/
+
         case LOADING_ToDo: {
             fetchTodo(payload.dispatch, payload.page)
             return state
