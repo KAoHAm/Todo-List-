@@ -1,21 +1,17 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import uuidv1 from "uuid";
 import {ADD_ToDo, DELETE_ToDo, LOADING_ToDo, LOADING} from "../constants/action-types";
 import  ItemsTodoComponent from "./ItemsTodoComponent"
 import {loadingToDo, loading} from "../actions";
-const idv = uuidv1();
-const url = "http://localhost:8081/todo?page[offset]="
+
 const mapStateToProps = state => {
 
     return {todos: state.todos, count: state.count, links: state.links};
 };
-
-
 const mapDispatchToProps = dispatch=> {
 
     return{
-        loading: page => dispatch({type: LOADING, payload: {page, dispatch}})
+        loadingToDo: page => dispatch({type: LOADING_ToDo, payload: {page, dispatch}})
     }
 };
 
@@ -34,29 +30,29 @@ class Pagination extends Component {
         this.goNextPage = this.goNextPage.bind(this);
     }
     componentDidMount(){
-  this.props.loading(this.state.currentPage)
+  this.props.loadingToDo(this.state.currentPage)
     }
     handleClick(event) {
         this.setState({
             currentPage: Number(event.target.id)
         });
 
-        this.props.loading(Number(event.target.id))
+        this.props.loadingToDo(Number(event.target.id))
     }
     goFirstPage(){
-        this.props.loading(1)
+        this.props.loadingToDo(1)
     }
     goPrevPage() {
         this.state.currentPage--
-        this.props.loading(this.state.currentPage)
+        this.props.loadingToDo(this.state.currentPage)
         }
 
     goNextPage() {
         this.state.currentPage++
-        this.props.loading(this.state.currentPage)
+        this.props.loadingToDo(this.state.currentPage)
     }
     goLastPage(){
-        this.props.loading(this.state.count)
+        this.props.loadingToDo(this.state.count)
     }
 
     render() {

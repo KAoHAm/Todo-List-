@@ -15,17 +15,15 @@ app.use(function (req, res, next) {
     next();
 });
 const todosPerPage=6
-const page=0
+const page=1
+const url = "http://localhost:8081/todo?page[offset]="+page;
 
-const url = "http://localhost:8081/todo";
 const resSend=(data={},url, count)=>{
-    let next=0
     let len=Math.ceil(data.length/todosPerPage)
-    len>1? next=page+1 : null
-      return {
+    return {
        links: {
             self: url,
-            first: url+"?page[offset]="+page,
+            first: url+"?page[offset]="+1,
             next: url+"?page[offset]="+(page+1),
             prev: url+"?page[offset]="+(page-1)
         },
@@ -37,17 +35,22 @@ const resSend=(data={},url, count)=>{
     }
 }
 app.get("/todo",(req, res)=>{
-
+    let page=1
     let  curentPage=req.query.page;
+    console.log(req.query)
+
     const todosPerPage=6;
-     if(curentPage!==undefined){
-         db.GetTodo().skip(todosPerPage*(curentPage.offset)).limit(todosPerPage)
+     if(curentPage!==undefined && req.query.page.offset!=="0"){
+
+         db.GetTodo().skip(todosPerPage*(curentPage.offset-1)).limit(todosPerPage)
              .then(data=>{
+               //  console.log(data)
                  db.Count()
                      .then(count=> {
-                         res.send(resSend(data, url, count))
+                         res.send(resSend(data, url,count))
                      })
              })
+
      }
     else {
          db.GetTodo()

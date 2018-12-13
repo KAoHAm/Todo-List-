@@ -2,7 +2,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import uuidv1 from "uuid";
-import {addToDo} from "../actions/index";
 import {ADD_ToDo} from "../constants/action-types";
 import "./AppComoponentDis.css"
 import { ValidatorComponent } from 'react-form-validator-core';
@@ -58,7 +57,6 @@ class ConnectedForm extends Component {
     }
 
     render() {
-        console.log(this.props)
         const {title, deadLine} = this.state;
         return (
             <ValidatorForm
@@ -81,19 +79,19 @@ class ConnectedForm extends Component {
                         onChange = {this.handleChangeTitle}
                         autoComplete="off"
                         validators={['required', 'isString']}
-                        errorMessages={['Title is required', 'Title is not valid']}
+                        errorMessages={['Title is required!!', 'Title is not valid!!']}
                     />
                     <TextValidator
                         step="0.01"
                         name="time"
-                        type = "text"
+                        type = "number"
                         className = "form-control"
                         id = "deadLine"
                         value = {deadLine}
                         onChange = {this.handleChangeDeadLine}
                         autoComplete="off"
                         validators={['required', 'isFloat']}
-                        errorMessages={['Time is required', 'Time is not valid']}
+                        errorMessages={['Time is required!!', 'Time is not valid!!']}
                     />
                 </tr>
                 </tbody >

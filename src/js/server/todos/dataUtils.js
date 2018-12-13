@@ -13,15 +13,12 @@ const Todo=mongoose.model("todo", todoSchema)
 
 
 exports.setUpConnection=()=> {
-
     console.log("connecting...")
     mongoose.connect(`mongodb://localhost/todo`);
-
 }
 
 exports.GetTodo=()=>{
     console.log("Get Todo")
-
     return  Todo.find().sort({"deadLine":-1});
 }
 
