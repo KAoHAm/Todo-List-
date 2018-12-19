@@ -16,8 +16,8 @@ function getDateTime(unixTime) {
 const ItemsTodoComponent = props => {
     parseFloat(props.todo.deadLine)
     let myTime = getDateTime(props.todo.deadLine);
-
-     return (
+    let count=props.count-1
+    return (
         <div>
             <table>
                 <tbody>
@@ -26,7 +26,8 @@ const ItemsTodoComponent = props => {
                     <td width="40% "  >{myTime }</td>
                     <td>  <button
                         className="btn-success btn-lg"
-                        onClick={() => props.delete(props.todo._id)} >
+                        onClick={() => props.delete(props.todo._id, count)} >
+
                         -
                     </button></td>
                 </tr>

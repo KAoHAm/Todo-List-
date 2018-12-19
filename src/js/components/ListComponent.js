@@ -9,31 +9,31 @@ const mapDispatchToProps = dispatch => {
     };
 };
 const mapStateToProps = state => {
-    //console.log(state)
     return {todos: state.todos, count: state.count};
 };
-class ProductList extends Component {
-    componentDidMount () {
-    //   console.log(this.props,"asd")
+const byTime =(p) => {
+    p.sort((a,b)=>a.deadLine-b.deadLine)
+}
 
-    }
+class ProductList extends Component {
+
     render(){
-       let page=Math.ceil(this.props.count/6)
-      //  console.log(this.props)
+
+        byTime(this.props.todos)
+        if(this.props.todos.length>6)
+            this.props.todos.pop()
         return(
             <div >
                 <ul className="list-group list-group-flush"  onLoad={this.handleSubmit}>
-                <Item />
-                    <Page/>
+                    <Item />
+                    <Page />
                 </ul>
 
             </div>
         )
     }
+
 };
 
-const ListComponent=connect(mapStateToProps, mapDispatchToProps)(ProductList)
+const ListComponent=connect(mapStateToProps)(ProductList)
 export default ListComponent
-
-
-

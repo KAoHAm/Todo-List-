@@ -1,25 +1,13 @@
 // src/js/reducers/index.js
-import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo, LOADING} from "../constants/action-types";
-import {loadToDo} from "../actions";
+import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo, ADDING_ToDo} from "../constants/action-types";
+import {loadToDo, addToDo, addingToDo} from "../actions";
 
 const url = "http://localhost:8081/todo";
-/*const fetchTodo1 = (dispatch) => {
-   fetch(url+"?page[offset]="+1)
-       .then(res=>res.json())
-       .then(el=> {
-            let links=el.links
-           el.data.map(el => {
-               dispatch(loadToDo(el.attributes, el.count, links))
-           })
-       })
-
-}*/
 const TimeOut=(t)=>{
-   // console.log("t",t)
-      t.map(el=>{
+    t.map(el=>{
         if (el.deadLine <= Number(new Date)) {
             el.title = el.title.concat(" Not Done!!!");
-            }
+        }
     })
 }
 const deletetodo=(todo)=>{
@@ -29,11 +17,10 @@ const deletetodo=(todo)=>{
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            },
+        }
     })
-        .then(res => res.json())
- }
-const postTodo=(todo)=>{
+}
+const postingTodo=(dispatch, todo)=>{
     fetch(url, {
         method: 'POST',
         body: JSON.stringify( todo),
@@ -41,55 +28,48 @@ const postTodo=(todo)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-
     })
         .then(res=>res.json())
-        .then(todo=>console.log(todo))
+        .then(data=>{
+            data.data.map(el=> {
+                dispatch(addToDo(el.attributes.pop(), el.count))
+            })
+        })
 }
 const fetchTodo=( dispatch, page)=>{
     fetch(url+"?page[offset]="+(page))
         .then(res=>res.json())
         .then(el=> {
-            console.log("el",el)
-
-            let links=el.links
             el.data.map(el => {
-                console.log("el",el)
-                dispatch(loadToDo(el.attributes, el.count, links, page))
+                dispatch(loadToDo(el.attributes, el.count, page))
             })
         })
 }
 const initialState = {
     todos: [],
 }
-
-
-
 const rootReducer = (state = initialState, {type, payload}) => {
 
     switch (type) {
-        case ADD_ToDo: {
-            console.log("pay",payload)
-            postTodo(payload.todo)
-            console.log(state)
-            return {todos: [...state.todos, payload.todo]};
-        }
-      /*  case LOADING_ToDo: {
-            fetchTodo(payload.dispatch)
+        case ADDING_ToDo: {
+            postingTodo(payload.dispatch, payload.todo )
             return state
-        }*/
+        }
+        case ADD_ToDo: {
+            return {todos: [...state.todos, payload.todo], count:payload.count+1};
+        }
         case LOADING_ToDo: {
-            fetchTodo(payload.dispatch, payload.page)
+            fetchTodo(payload.dispatch, )
             return state
         }
         case LOAD_ToDo: {
             TimeOut(payload.todos)
-           // return {todos: [...state.todos, ...payload.todos], count: payload.count, links: payload.links};
-            return {todos: [ ...payload.todos], count: payload.count, links: payload.links};
+            // return {todos: [...state.todos, ...payload.todos], count: payload.count, links: payload.links};
+            return {todos: [ ...state.todos, ...payload.todos], count: payload.count};
         }
         case DELETE_ToDo: {
             deletetodo(payload)
-            return {todos: [...state.todos.filter(todo => todo._id !== payload._id)]}
+            return {todos: [...state.todos.filter(todo => todo._id !== payload._id)], count: payload.count}
         }
         default:
             return state;
@@ -97,3 +77,4 @@ const rootReducer = (state = initialState, {type, payload}) => {
 
 };
 export default rootReducer;
+
