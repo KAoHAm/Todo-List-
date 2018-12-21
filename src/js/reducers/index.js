@@ -33,16 +33,16 @@ const postingTodo=(dispatch, todo)=>{
         .then(data=>{
             data.data.map(el=> {
                 let arr=el.attributes.filter(el=>el.title===todo.title)
-                dispatch(addToDo(arr[0], el.count))
+                dispatch(addToDo(arr[0]))
             })
         })
 }
-const fetchTodo=( dispatch, page)=>{
+const fetchTodo=(dispatch, page)=>{
     fetch(url+"?page[offset]="+(page))
         .then(res=>res.json())
         .then(el=> {
             el.data.map(el => {
-                dispatch(loadToDo(el.attributes, el.count, page))
+                dispatch(loadToDo(el.attributes, el.count))
             })
         })
 }
@@ -74,9 +74,6 @@ const rootReducer = (state = initialState, {type, payload}) => {
         }
         case LOAD_ToDo: {
             TimeOut(payload.todos)
-
-            //byTime(state.attributes)
-
             // return {todos: [...state.todos, ...payload.todos], count: payload.count, links: payload.links};
             return {todos: [  ...payload.todos], count: payload.count};
         }
