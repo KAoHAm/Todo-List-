@@ -11,17 +11,10 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     return {todos: state.todos, count: state.count};
 };
-const byTime =(p) => {
-    p.sort((a,b)=>a.deadLine-b.deadLine)
-}
 
 class ProductList extends Component {
 
     render(){
-
-        byTime(this.props.todos)
-        if(this.props.todos.length>6)
-            this.props.todos.pop()
         return(
             <div >
                 <ul className="list-group list-group-flush"  onLoad={this.handleSubmit}>

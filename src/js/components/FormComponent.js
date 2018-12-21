@@ -52,12 +52,9 @@ class ConnectedForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.props)
         this.state.deadLine = addTime(this.state.deadLine)
         this.props.addingToDo(this.state);
         this.setState({title: "", deadLine: "30"});
-        let count=this.props.count
-        count ++
     }
 
     render() {

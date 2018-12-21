@@ -23,19 +23,18 @@ exports.setUpConnection=()=> {
 exports.GetTodo=()=>{
     console.log("Get Todo")
 
-    return  Todo.find();
+    return  Todo.find().sort({"deadLine":1});
 }
 
 exports.Count=(i)=>{
     return  i=Todo.countDocuments()
 }
-var myId = mongoose.Types.ObjectId();
-var ObjectID = mongo.ObjectID
+
 exports.PostTodo=(data)=> {
 
-    data._id=new ObjectID
+
     const todo=new Todo({
-        // _id: new ObjectID(),
+
         title: data.title,
         deadLine: data.deadLine,
     })

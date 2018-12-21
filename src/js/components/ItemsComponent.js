@@ -11,7 +11,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteToDo: (_id, count)=> dispatch({type: DELETE_ToDo, payload: {_id, count}})
+        deleteToDo: (_id)=> dispatch({type: DELETE_ToDo, payload: {_id}})
     }
 }
 
@@ -21,8 +21,7 @@ class ConnectedItem extends Component {
     render() {
         const    renderTodos = () => {
             return this.props.todos.map((todo, index) =>
-                <ItemsTodoComponent delete={this.props.deleteToDo} key={idv + index} todo={todo}
-                                    count={this.props.count}/>)
+                <ItemsTodoComponent delete={this.props.deleteToDo} key={idv + index} todo={todo}/>)
         }
         return (
             <div>

@@ -32,7 +32,8 @@ const postingTodo=(dispatch, todo)=>{
         .then(res=>res.json())
         .then(data=>{
             data.data.map(el=> {
-                dispatch(addToDo(el.attributes.pop(), el.count))
+                let arr=el.attributes.filter(el=>el.title===todo.title)
+                dispatch(addToDo(arr[0], el.count))
             })
         })
 }
@@ -45,8 +46,13 @@ const fetchTodo=( dispatch, page)=>{
             })
         })
 }
+const byTime =(p) => {
+    p.sort((a,b)=>a.deadLine-b.deadLine)
+}
+
 const initialState = {
     todos: [],
+    count: 0
 }
 const rootReducer = (state = initialState, {type, payload}) => {
 
@@ -56,20 +62,27 @@ const rootReducer = (state = initialState, {type, payload}) => {
             return state
         }
         case ADD_ToDo: {
-            return {todos: [...state.todos, payload.todo], count:payload.count+1};
+            let newState=[...state.todos, payload.todo]
+            byTime(newState)
+            if(newState.length>6)
+                newState.pop()
+            return {todos: newState, count:state.count+1};
         }
         case LOADING_ToDo: {
-            fetchTodo(payload.dispatch, )
+            fetchTodo(payload.dispatch, payload.page )
             return state
         }
         case LOAD_ToDo: {
             TimeOut(payload.todos)
+
+            //byTime(state.attributes)
+
             // return {todos: [...state.todos, ...payload.todos], count: payload.count, links: payload.links};
-            return {todos: [ ...state.todos, ...payload.todos], count: payload.count};
+            return {todos: [  ...payload.todos], count: payload.count};
         }
         case DELETE_ToDo: {
             deletetodo(payload)
-            return {todos: [...state.todos.filter(todo => todo._id !== payload._id)], count: payload.count}
+            return {todos: [...state.todos.filter(todo => todo._id !== payload._id)], count: state.count-1}
         }
         default:
             return state;

@@ -38,13 +38,10 @@ app.get("/todo",(req, res)=>{
     let  curentPage=req.query.page;
     const todosPerPage=6;
     if(curentPage!==undefined && req.query.page.offset!=="0"){
-
         db.GetTodo().skip(todosPerPage*(curentPage.offset-1)).limit(todosPerPage)
             .then(data=>{
-
                 db.Count()
                     .then(count=> {
-
                         res.send(resSend(data,  count,url))
                     })
             })
@@ -62,21 +59,15 @@ app.get("/todo",(req, res)=>{
 
 app.post("/todo",(req, res)=>{
     db.PostTodo(req.body)
-
     db.Count()
         .then(count=> {
-            //   res.send(resSend(data, count))
-            //})
             db.GetTodo()
                 .then(data=>{
                     console.log("body", data)
                     res.send(resSend(data, count))
-
                 })
         })
-
 })
-
 
 app.delete("/todo",(req, res)=>{
     db.DeleteTodo(req.body)
