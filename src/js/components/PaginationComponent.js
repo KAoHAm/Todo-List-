@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {ADD_ToDo, DELETE_ToDo, LOADING_ToDo, LOADING} from "../constants/action-types";
-import  ItemsTodoComponent from "./ItemsTodoComponent"
-import {loadingToDo, loading} from "../actions";
+import {LOADING_ToDo } from "../constants/action-types";
 
 const mapStateToProps = state => {
 
@@ -30,7 +28,7 @@ class Pagination extends Component {
         this.goNextPage = this.goNextPage.bind(this);
     }
     componentDidMount(){
-  this.props.loadingToDo(this.state.currentPage)
+        this.props.loadingToDo(this.state.currentPage)
     }
     handleClick(event) {
         this.setState({
@@ -45,7 +43,7 @@ class Pagination extends Component {
     goPrevPage() {
         this.state.currentPage--
         this.props.loadingToDo(this.state.currentPage)
-        }
+    }
 
     goNextPage() {
         this.state.currentPage++
@@ -77,7 +75,8 @@ class Pagination extends Component {
         });
 
         // Logic for displaying buttonst "first", "Prev", "next" and "last"
-        const firstPage = this.state.currentPage<3  ? null :
+
+        const firstPage = this.state.currentPage < 3 ? null :
             <li
                 id="page-numbers"
                 className="page-numbers"
@@ -85,21 +84,21 @@ class Pagination extends Component {
             >First
             </li>;
 
-        const prevPage = this.state.currentPage <2  ? null :
+        const prevPage = this.state.currentPage < 2 ? null :
             <li
                 id="page-numbers"
                 className="page-numbers"
                 onClick={this.goPrevPage}
             >Prev
             </li>;
-        const nextpage = this.state.count===this.state.currentPage ? null :
+        const nextpage = this.state.count =this.state.currentPage  ? null :
             <li
                 id="page-numbers"
                 className="page-item"
                 onClick={this.goNextPage}
             >Next
             </li>;
-        const lastpage = this.state.count<3 ? null :
+        const lastpage = this.state.count < 3 ? null :
             <li
                 id="page-numbers"
                 className="page-item"
@@ -107,20 +106,17 @@ class Pagination extends Component {
             >Last
             </li>;
 
-
         return (
-
-                <div id="page-numbers">
-                        {firstPage}
-                        {prevPage}
-                    <ul className="pagination pagination-md" id="page-numbers">
-                        {renderPageNumbers}
-                    </ul>
-                        {nextpage}
-                        {lastpage}
-
-                </div>
-        );
+            <div id="page-numbers">
+                {firstPage}
+                {prevPage}
+                <ul className="pagination pagination-md" id="page-numbers">
+                    {renderPageNumbers}
+                </ul>
+                {nextpage}
+                {lastpage}
+            </div>
+        )
     }
 }
 

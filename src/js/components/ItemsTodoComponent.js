@@ -17,7 +17,7 @@ const ItemsTodoComponent = props => {
     parseFloat(props.todo.deadLine)
     let myTime = getDateTime(props.todo.deadLine);
 
-     return (
+    return (
         <div>
             <table>
                 <tbody>
@@ -27,6 +27,7 @@ const ItemsTodoComponent = props => {
                     <td>  <button
                         className="btn-success btn-lg"
                         onClick={() => props.delete(props.todo._id)} >
+
                         -
                     </button></td>
                 </tr>

@@ -18,60 +18,65 @@ const todosPerPage=6
 const page=1
 const url = "http://localhost:8081/todo?page[offset]="+page;
 
-const resSend=(data={},url, count)=>{
+const resSend=(data={}, count ,url)=>{
     let len=Math.ceil(data.length/todosPerPage)
     return {
-       links: {
+        links: {
             self: url,
             first: url+"?page[offset]="+1,
             next: url+"?page[offset]="+(page+1),
             prev: url+"?page[offset]="+(page-1)
         },
         data: [{
-           count: count,
+            count: count,
             type: "todos",
             attributes: data,
         }]
     }
 }
 app.get("/todo",(req, res)=>{
-    let page=1
     let  curentPage=req.query.page;
-    console.log(req.query)
-
     const todosPerPage=6;
-     if(curentPage!==undefined && req.query.page.offset!=="0"){
+    if(curentPage!==undefined && req.query.page.offset!=="0"){
+        db.GetTodo().skip(todosPerPage*(curentPage.offset-1)).limit(todosPerPage)
+            .then(data=>{
+                db.Count()
+                    .then(count=> {
+                        res.send(resSend(data,  count,url))
+                    })
+            })
 
-         db.GetTodo().skip(todosPerPage*(curentPage.offset-1)).limit(todosPerPage)
-             .then(data=>{
-               //  console.log(data)
-                 db.Count()
-                     .then(count=> {
-                         res.send(resSend(data, url,count))
-                     })
-             })
-
-     }
+    }
     else {
-         db.GetTodo()
-             .then(data => {
-                 res.send(resSend(data, url))
-             })
-     }
+        db.GetTodo()
+            .then(data => {
+                res.send(resSend(data, url))
+            })
+    }
 
 
 })
 
 app.post("/todo",(req, res)=>{
     db.PostTodo(req.body)
-        .then(data=>{
-            res.send(data)
+    db.Count()
+        .then(count=> {
+            db.GetTodo()
+                .then(data=>{
+                    console.log("body", data)
+                    res.send(resSend(data, count))
+                })
         })
 })
 
 app.delete("/todo",(req, res)=>{
-	db.DeleteTodo(req.body)
-	 .then(data => res.send(data));
+    db.DeleteTodo(req.body)
+        .then(data => {
+            db.Count()
+                .then(count => {
+                    res.send(resSend(data, count))
+                })
+        })
 })
 
 var server = app.listen(8081, function () {

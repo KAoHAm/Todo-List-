@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-
 const count = st => {
-    console.log(st)
-    return { count: st.count };
+    return { todos: st.count };
 };
-const ConnectedCount = ({ count }) => (
-    <h2> {count} </h2>
+const ConnectedCount = ({ todos }) => (
+
+    <h2> {
+
+        todos} </h2>
 );
 
 const CountComponent = connect(count)(ConnectedCount);

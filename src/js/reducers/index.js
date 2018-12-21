@@ -1,25 +1,13 @@
 // src/js/reducers/index.js
-import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo, LOADING} from "../constants/action-types";
-import {loadToDo} from "../actions";
+import {ADD_ToDo, DELETE_ToDo, LOAD_ToDo, LOADING_ToDo, ADDING_ToDo} from "../constants/action-types";
+import {loadToDo, addToDo, addingToDo} from "../actions";
 
 const url = "http://localhost:8081/todo";
-/*const fetchTodo1 = (dispatch) => {
-   fetch(url+"?page[offset]="+1)
-       .then(res=>res.json())
-       .then(el=> {
-            let links=el.links
-           el.data.map(el => {
-               dispatch(loadToDo(el.attributes, el.count, links))
-           })
-       })
-
-}*/
 const TimeOut=(t)=>{
-   // console.log("t",t)
-      t.map(el=>{
+    t.map(el=>{
         if (el.deadLine <= Number(new Date)) {
             el.title = el.title.concat(" Not Done!!!");
-            }
+        }
     })
 }
 const deletetodo=(todo)=>{
@@ -29,11 +17,10 @@ const deletetodo=(todo)=>{
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-            },
+        }
     })
-        .then(res => res.json())
- }
-const postTodo=(todo)=>{
+}
+const postingTodo=(dispatch, todo)=>{
     fetch(url, {
         method: 'POST',
         body: JSON.stringify( todo),
@@ -41,55 +28,58 @@ const postTodo=(todo)=>{
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
-
     })
         .then(res=>res.json())
-        .then(todo=>console.log(todo))
-}
-const fetchTodo=( dispatch, page)=>{
-    fetch(url+"?page[offset]="+(page))
-        .then(res=>res.json())
-        .then(el=> {
-            console.log("el",el)
-
-            let links=el.links
-            el.data.map(el => {
-                console.log("el",el)
-                dispatch(loadToDo(el.attributes, el.count, links, page))
+        .then(data=>{
+            data.data.map(el=> {
+                let arr=el.attributes.filter(el=>el.title===todo.title)
+                dispatch(addToDo(arr[0]))
             })
         })
 }
-const initialState = {
-    todos: [],
+const fetchTodo=(dispatch, page)=>{
+    fetch(url+"?page[offset]="+(page))
+        .then(res=>res.json())
+        .then(el=> {
+            el.data.map(el => {
+                dispatch(loadToDo(el.attributes, el.count))
+            })
+        })
+}
+const byTime =(p) => {
+    p.sort((a,b)=>a.deadLine-b.deadLine)
 }
 
-
-
+const initialState = {
+    todos: [],
+    count: 0
+}
 const rootReducer = (state = initialState, {type, payload}) => {
 
     switch (type) {
-        case ADD_ToDo: {
-            console.log("pay",payload)
-            postTodo(payload.todo)
-            console.log(state)
-            return {todos: [...state.todos, payload.todo]};
-        }
-      /*  case LOADING_ToDo: {
-            fetchTodo(payload.dispatch)
+        case ADDING_ToDo: {
+            postingTodo(payload.dispatch, payload.todo )
             return state
-        }*/
+        }
+        case ADD_ToDo: {
+            let newState=[...state.todos, payload.todo]
+            byTime(newState)
+            if(newState.length>6)
+                newState.pop()
+            return {todos: newState, count:state.count+1};
+        }
         case LOADING_ToDo: {
-            fetchTodo(payload.dispatch, payload.page)
+            fetchTodo(payload.dispatch, payload.page )
             return state
         }
         case LOAD_ToDo: {
             TimeOut(payload.todos)
-           // return {todos: [...state.todos, ...payload.todos], count: payload.count, links: payload.links};
-            return {todos: [ ...payload.todos], count: payload.count, links: payload.links};
+            // return {todos: [...state.todos, ...payload.todos], count: payload.count, links: payload.links};
+            return {todos: [  ...payload.todos], count: payload.count};
         }
         case DELETE_ToDo: {
             deletetodo(payload)
-            return {todos: [...state.todos.filter(todo => todo._id !== payload._id)]}
+            return {todos: [...state.todos.filter(todo => todo._id !== payload._id)], count: state.count-1}
         }
         default:
             return state;
@@ -97,3 +87,4 @@ const rootReducer = (state = initialState, {type, payload}) => {
 
 };
 export default rootReducer;
+
